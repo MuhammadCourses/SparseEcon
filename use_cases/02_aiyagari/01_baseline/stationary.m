@@ -4,7 +4,7 @@ function [diff, G, G_dense, ss] = stationary(x, G, G_dense, param)
 K = x(1);
 L = x(2); % with inelastic labor supply: =param.L
 
-Y  = K^param.alpha * L^(1-param.alpha);
+Y  = 0.9*K^param.alpha * L^(1-param.alpha);
 rk = param.alpha * Y / K;
 w  = (1-param.alpha) * Y / L;
 r  = rk - param.delta;
