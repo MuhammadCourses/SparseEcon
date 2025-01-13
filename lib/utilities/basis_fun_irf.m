@@ -42,7 +42,7 @@ function [X, nodes] = basis_fun_irf(Y, PHI, H, N, bfun_type, t, direction)
         X = zeros(1, H*N);
 
         for i = 1:N
-            X(1, H*(i-1)+1 : i*H) = interp1(t, Y(:, i), nodes) / T_node;
+            X(1, H*(i-1)+1 : i*H) = interp1(t, Y(:, i), nodes) / T_node;            % This create X as a row vector of coeffients so that T_node * X' = Y
         end
     end
 
@@ -51,7 +51,7 @@ function [X, nodes] = basis_fun_irf(Y, PHI, H, N, bfun_type, t, direction)
     if direction == "get_function"
 
         for i = 1:N
-            X(:, i) = (PHI(1, H*(i-1)+1 : i*H) * T_fine)';
+            X(:, i) = (PHI(1, H*(i-1)+1 : i*H) * T_fine)';                          % This assumes that PHI has the same structure as X above where it is being calculated as a row vector of orthogonal coefficients
         end
 
     end

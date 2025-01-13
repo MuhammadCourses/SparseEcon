@@ -1,5 +1,21 @@
 function [T, T_prime] = basis_function(n, nodes, region_min, region_max, type, X, Y)
+        % Purpose: This function generates the basis functions for the given type of basis, nodes, and region.
+        % Inputs:
+        %   n: The number of basis functions to generate.
+        %   nodes: The points at which to evaluate the basis functions.
+        %   region_min: The minimum of the region over which the basis functions are defined.
+        %   region_max: The maximum of the region over which the basis functions are defined.
+        %   type: The type of basis functions to generate. Options are:
+        %       "nodal": Nodal basis functions.
+        %       "nodal_g0": Nodal basis functions with an additional basis function for g0.
+        %       "cheb": Chebyshev basis functions.
+        %       "cheb_g0": Chebyshev basis functions with an additional basis function for g0.
+        %       "gaussian": Gaussian basis functions.
+        %   X: The basis points for the basis functions. For "nodal" and "nodal_g0", this is a vector of basis points. For "cheb" and "cheb_g0", this is the degree of the Chebyshev polynomial. For "gaussian", this is a vector of means.
+        %   Y: The additional input for the basis functions. For "gaussian", this is a vector of standard deviations. For "nodal_g0" and "cheb_g0", this is a two-column matrix where the first column is the x values of g0 and the second column is the y values of g0.
 
+        % Outputs:
+        %   T: The basis functions evaluated at the nodes. Each row of T corresponds to a basis function evaluated at the nodes. So, the dimensions of T will be n x numel(nodes). 
 if type == "nodal"
     % Here "X" is the vector of nodal basis points, "Y" is unused
     assert(issorted(X(:), 'strictascend'), ...
@@ -38,8 +54,8 @@ if type == "nodal_g0"
 end
 
 if type == "cheb"
-    T = cheb_poly(n, nodes, region_min, region_max); 
-    T_prime = cheb_poly_diff(n, nodes, region_min, region_max, 1); 
+    T = cheb_poly(n, nodes, region_min, region_max);             % Chebyshev basis functions, this does not need X and Y because it is not based on the nodal points but the degree of the polynomial and the region!
+    T_prime = cheb_poly_diff(n, nodes, region_min, region_max, 1); % 
 end
 
 if type == "cheb_g0"

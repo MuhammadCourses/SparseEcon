@@ -1,5 +1,5 @@
 function T = cheb_poly_diff(n, x, a, b, order) 
-
+    % Purpose: This function generates the derivative of the Chebyshev basis functions.
     % x should be a 1x m vector at which the Chebyshev polynomials are to be evaluated
     t = cheb_poly(n, x, a, b); %Needs to come before the x-transformation in the next line!
 

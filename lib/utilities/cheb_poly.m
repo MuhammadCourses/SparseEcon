@@ -14,7 +14,7 @@ function T = cheb_poly(n, x, a, b)
         tm2 = T(1, :);
         tm1 = T(2, :);
         for i = 3:n
-            T(i, :) = 2*x.*tm1 - tm2;
+            T(i, :) = 2*x.*tm1 - tm2;           % this uses Chebyshev recursion! Check out Levaque page 265 for this formula
             tm2 = tm1;
             tm1 = T(i, :);
         end
