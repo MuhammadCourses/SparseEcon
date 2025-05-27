@@ -30,14 +30,14 @@ warning off
 % ps = parallel.Settings;
 % ps.Pool.AutoCreate = false;
 
-diary ./output/output.log
-diary on
+% diary ./output/output.log
+% diary on
 
-addpath(genpath('../../../lib/'))
+addpath(genpath('/Users/muhammadbashir/GitHub/MuhammadCourses/SparseEcon'))
 figure_format;
 
-fprintf('Running algorithm:\n')
-run_time = tic;
+% fprintf('Running algorithm:\n')
+% run_time = tic;
 
 
 %% PARAMETERS

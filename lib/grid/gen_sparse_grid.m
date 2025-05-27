@@ -1,20 +1,20 @@
 function [grid, lvl] = gen_sparse_grid(d, n, surplus)
-
+    % Purpose: Generate a sparse grid of dimension d and level n and surplus. 
     if nargin < 3
         surplus = zeros(1, d);
     end
 
     if d == 1
         [grid, lvl] = gen_sparse_grid(2, n, [surplus, 0]);
-        grid = grid(lvl(:, 2) == 0, 1);
-        lvl = lvl(lvl(:, 2) == 0, 1);
+        grid = grid(lvl(:, 2) == 0, 1);                 % Only keep the 1D grid i.,e where the second dimension is level 0 i.,e the first dimension is the only dimension
+        lvl = lvl(lvl(:, 2) == 0, 1);                     
         return
     end
 
     l = n * ones(1, d) + surplus;
     % Generate the one-dimensional grid points for each possible level l
     % NOTE: grid_1D{i} stores the points for level l = i-1
-    grid_1D = cellfun(@(l) 0:2^-l:1, num2cell(0:max(l)), 'UniformOutput', 0);
+    grid_1D = cellfun(@(l) 0:2^-l:1, num2cell(0:max(l)), 'UniformOutput', 0);           % takes the levels and generates the grid points. cellfun is just a function that applies the function to each element of the cell array
     grid_1D{1} = 1/2; grid_1D{2} = [0 1/2 1]; % Manually code first two levels
     for i = max(l)+1:-1:2
         grid_1D{i} = setdiff(grid_1D{i}, grid_1D{i-1});
@@ -30,9 +30,9 @@ function [grid, lvl] = gen_sparse_grid(d, n, surplus)
     %    These possible grid levels are the same across all composite combinations.
     % 4. Distribute these grid levels across all dimension combinations to
     %    produce the final set of levels across all dimensions.
-    n_surplus = nnz(surplus);
-    surplus_dims = find(surplus);
-    normal_dims = find(~surplus);
+    n_surplus = nnz(surplus);           % Number of surplus dimensions i.,e surplus non-zero
+    surplus_dims = find(surplus);       % Indices of surplus dimensions
+    normal_dims = find(~surplus);       % Indices of normal dimensions
     d_pos_level = min(n, d - n_surplus); % Max possible num of normal dims w/ >0 level
     normal_dim_combs = nchoosek(normal_dims, d_pos_level);
 
